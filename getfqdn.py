@@ -14,6 +14,7 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 aTld = []
+dFqdn = {}
 
 # Get some commandline arguments:
 sArgParser=argparse.ArgumentParser()
@@ -40,6 +41,10 @@ except FileNotFoundError:
 
 #Read from standard input:
 for strInput in sys.stdin:
+   # if len(strInput.strip()) == 0:
+        #print(len(strInput.strip()))
+    #    continue
+    
     # Some URLs have double encoded values, so 2 times "unquote":
     strInput = urllib.parse.unquote(strInput)
     strInput = urllib.parse.unquote(strInput)
@@ -55,8 +60,11 @@ for strInput in sys.stdin:
             if sTld:
                 if sTld[0] != "#":
                     if match.endswith("." + sTld):
-                        sys.stdout.write (match.lower())
+                        sFqdn = match.lower().strip()
+                        dFqdn[sFqdn] = sFqdn
             else:
                 print ("Invalid TLD file.")
 
-        sys.stdout.write ("\n")
+for sFqdn in dFqdn:
+    sys.stdout.write(sFqdn + "\n")
+    
