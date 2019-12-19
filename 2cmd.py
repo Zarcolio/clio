@@ -21,7 +21,7 @@ signal.signal(signal.SIGINT, signal_handler)
 
 # Get some commandline arguments:
 parser = argparse.ArgumentParser()
-parser.add_argument("-c", "--cmd", help="File containing one or more commands that should be executed. Use $2cmd$ or $2cmdsan$ in lowercase in each command line. $2cmd$ is replaced with each line from input. Use $cmdsan$ to sanitize a string for use in a filename.")
+parser.add_argument("cmd", help="File containing one or more commands that should be executed. Use $2cmd$ or $2cmdsan$ in lowercase in each command line. $2cmd$ is replaced with each line from input. Use $cmdsan$ to sanitize a string for use in a filename.")
 args = parser.parse_args()
 
 if args.cmd:
