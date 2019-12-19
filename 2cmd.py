@@ -20,7 +20,7 @@ def FileNameSan(sFileName):
 signal.signal(signal.SIGINT, signal_handler)
 
 # Get some commandline arguments:
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description="This script takes input lines from stdin and inserts them in the commands provided in the commands file. This way you can execute a certain command many times. For example you can take screen shots of URLs with cutycapt provided by output of another command.")
 parser.add_argument("cmd", help="File containing one or more commands that should be executed. Use $2cmd$ or $2cmdsan$ in lowercase in each command line. $2cmd$ is replaced with each line from input. Use $cmdsan$ to sanitize a string for use in a filename.")
 args = parser.parse_args()
 
