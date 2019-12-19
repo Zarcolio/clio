@@ -27,11 +27,9 @@ parser.add_argument("-oF", "--failed", help="Define an output file for FQDNs tha
 args = parser.parse_args()
 
 if args.success:
-	print ("Success: " + args.success)
 	fSuccess = open(args.success, 'w')
 
 if args.failed:
-	print ("Failed: " + args.failed)
 	fFailed = open(args.failed, 'w')
 
 
