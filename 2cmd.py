@@ -41,11 +41,15 @@ except FileNotFoundError:
 for strInput in sys.stdin:
     for sCmd in aCmds:
         sCmd = sCmd.strip()
+        if not strInput.strip():
+            continue
+        
         strInputSan = FileNameSan(strInput)
         sCmd = sCmd.replace("$2cmdsan$", strInputSan, len(sCmd))
         #sCmd = sCmd.strip()
         sCmd = sCmd.replace("$2cmd$", strInput, len(sCmd))
         #sCmd = sCmd.strip()
         sCmd = sCmd.replace("\n", "", len(sCmd))
+        #print (sCmd)
         #print (sCmd)
         os.system(sCmd)

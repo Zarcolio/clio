@@ -16,6 +16,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument("format", help="Each number from 1 to 9 is replaced with the corresponding domain level taken from the input (takes vTLD such as co.uk into account). For example, if the argument 3.2.1 is given and stdin supplies sub5.sub4.sub3.example.co.uk then sub3.example.co.uk is returned. The dots are free-form, any character can be used.")
 args = parser.parse_args()
 
+'''
+This script can be used for example when searching for amazon buckets. Use: 
+    cat domainlist.txt|splitxld.py 2.1>buckets.txt
+    cat domainlist.txt|splitxld.py 2-1>>buckets.txt
+    cat domainlist.txt|splitxld.py 2>>buckets.txt"
+'''
+
 for sInFqdn in sys.stdin:
     sOutput = args.format
     # Because of vTLD suffixes:
