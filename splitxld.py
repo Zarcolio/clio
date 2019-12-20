@@ -24,6 +24,9 @@ This script can be used for example when searching for amazon buckets. Use:
 '''
 
 for sInFqdn in sys.stdin:
+    if not sInFqdn.strip():
+        continue
+    
     sOutput = args.format
     # Because of vTLD suffixes:
     dl3, dl2, dl1 = extract(sInFqdn)
