@@ -58,19 +58,19 @@ parser.add_argument("-x", "--https", help="Use only HTTP or HTTP, not both.")
 args = parser.parse_args()
 
 
-if args.ports is None:
-    sPortArg = "443,80"
-else:
+if args.ports:
     sPortArg = args.ports
-
-if args.timeout is None:
-    sTimeoutArg = "1"
 else:
+    sPortArg = "443,80"
+
+if args.timeout:
     sTimeoutArg = args.timeout
+else:
+    sTimeoutArg = "1"
 
 aPorts = sPortArg.split(",")
 
-if args.status is not None:
+if args.status:
     aStatus = args.status.split(",")
 else:
     aStatus = []

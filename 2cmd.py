@@ -51,5 +51,4 @@ for strInput in sys.stdin:
         #sCmd = sCmd.strip()
         sCmd = sCmd.replace("\n", "", len(sCmd))
         #print (sCmd)
-        #print (sCmd)
         os.system(sCmd)
