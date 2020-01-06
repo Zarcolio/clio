@@ -53,5 +53,5 @@ for strInput in sys.stdin:
         #sCmd = sCmd.strip()
         sCmd = sCmd.replace("\n", "", len(sCmd))
         if args.verbose:
-            sys.stderr.write((colored(sCmd,"red"))+"\n")
+            sys.stderr.write((colored(sCmd,"green"))+"\n")
         os.system(sCmd)
