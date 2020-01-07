@@ -12,3 +12,7 @@ This command tries to find subdomains of askubuntu.com with subfinder. The subdo
 * https-askubuntu.com.png
 * https-www.askubuntu.com.png
 * http-www.askubuntu.com.png
+
+*gobuster dir -u scanme.nmap.org -q -w /usr/share/dirb/wordlists/common.txt -e -n -r|2cmd 2cmd-cutycapt.txt -v*
+
+This command tries to enumerated directories on scanme.nmap.org and creates screenshots of the URLs found.
