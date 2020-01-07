@@ -1,6 +1,6 @@
 # Command Line Input Output
 
-Bunch of tools that take input from stdin, do some stuff and give output to stdout, making them perfect for use in pided commands.
+Bunch of tools that take input from stdin, do some stuff and give output to stdout, making them perfect for use in piped commands.
 
 For example:
 subfinder -silent -d askubuntu.com|resolves|useshttp -p 80,443,8443 -s success,403,401|2cmd 2cmd-cutycapt.txt -v
