@@ -29,6 +29,7 @@ This command tries to enumerated directories on scanme.nmap.org and creates scre
 * http-scanme.nmap.org-shared.png
 
 When combining hakrawler with wappalyzer and wappaligner through the use of 2cmd:
+
 `hakrawler -plain -scope=strict -domain scanme.nmap.org|2cmd ~/.scripts/pipe-tools/2cmd-wappalyzer.txt`
 
 It will give results like these:
