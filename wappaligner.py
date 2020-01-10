@@ -17,12 +17,9 @@ try:
 except:
     pass
 
-
-for x in json_data["urls"]:
-    print (x)
-    
+   
 for sUrl in json_data["urls"]:
-    print (colored("URL = " + sUrl,"green"))
+    print (colored("URL = " + sUrl + " (HTTP status "+ str(json_data['urls'][sUrl]['status']) + ")","green"))
 #    print (colored("URL = " + sUrl["status"],"green"))
 
 for app in json_data["applications"]:
@@ -33,5 +30,5 @@ for app in json_data["applications"]:
         sVersion1 = ""
         sVersion2 = ""
 
-    sGoogleUrl = "https://www.google.com/search?q=" + urllib.parse.quote("\"" + app["name"] + "\"" + sVersion2 + " cve | exploit | vulnerability")
+    sGoogleUrl = "https://www.google.com/search?q=" + urllib.parse.quote("\"" + app["name"] + "\"" + sVersion2 + " cve |exploit |vulnerability |updates |changelog")
     print (app["name"] + sVersion1 + " (" + app["confidence"] + "%) - " + app["website"] + " - " + sGoogleUrl)
