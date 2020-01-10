@@ -28,3 +28,13 @@ This command tries to enumerated directories on scanme.nmap.org and creates scre
 * http-scanme.nmap.org-server-status.png
 * http-scanme.nmap.org-shared.png
 
+When combining hakrawler with wappalyzer and wappaligner through the use of 2cmd:
+`hakrawler -plain -scope=strict -domain scanme.nmap.org|2cmd ~/.scripts/pipe-tools/2cmd-wappalyzer.txt`
+
+It will give results like these:
+
+* URL = http://scanme.nmap.org/ (HTTP status 200)
+* Apache 2.4.7 (100%) - http://apache.org - https://www.google.com/search?q=%22Apache%22%20%222.4.7%22%20cve%20%7Cexploit%20%7Cvulnerability%20%7Cupdates%20%7Cchangelog
+* Google AdSense (100%) - https://www.google.fr/adsense/start/ - https://www.google.com/search?q=%22Google%20AdSense%22%20cve%20%7Cexploit%20%7Cvulnerability%20%7Cupdates%20%7Cchangelog
+* Google Analytics (100%) - http://google.com/analytics - https://www.google.com/search?q=%22Google%20Analytics%22%20cve%20%7Cexploit%20%7Cvulnerability%20%7Cupdates%20%7Cchangelog
+* Ubuntu (100%) - http://www.ubuntu.com/server - https://www.google.com/search?q=%22Ubuntu%22%20cve%20%7Cexploit%20%7Cvulnerability%20%7Cupdates%20%7Cchangelog
