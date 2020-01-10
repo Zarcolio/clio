@@ -1,1 +1,1 @@
-cutycapt --url=$2cmd$ --out=$2cmdsan$.png --delay=1000 --user-agent="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/71.0"
+cutycapt --url=$2cmd$ --out=$2cmdsan$.png --delay=1000 --user-agent='Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/71.0'
