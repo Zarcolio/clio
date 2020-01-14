@@ -5,6 +5,8 @@ import socket
 import sys
 import signal
 import argparse
+from random import choice
+from string import ascii_letters, digits
 
 def signal_handler(sig, frame):
 	print("\nCtrl-C detected, quitting...\n")
@@ -32,18 +34,43 @@ if args.success:
 if args.failed:
 	fFailed = open(args.failed, 'w')
 
+sRandom =  ''.join([choice(ascii_letters + digits) for i in range(20)])
+dRembemberdIpAddressesRandom = {}
 
 for strInput in sys.stdin:
-	strInput = strInput.strip()
-	try:
-		result = socket.gethostbyname_ex(strInput)
-		sys.stdout.write(strInput + "\n")
-		if args.success:
-			dIpAddresses = GetIpAddress(strInput)
-			for sIpAddress in dIpAddresses: 
-				fSuccess.write(strInput + ";" + sIpAddress + " \n")
-	except socket.gaierror:
-		if args.failed:
-			fFailed.write(strInput + "\n")
-		else:
-			pass
+    strInput = strInput.strip()
+    sWildcardFqdn = sRandom + "." + strInput
+    #print(sWildcardFqdn)
+
+    try:
+        dIpAddressesRandom = GetIpAddress(sWildcardFqdn)
+    except:
+        dIpAddressesRandom = False
+    
+    try:
+        dIpAddresses = GetIpAddress(strInput)
+        #for sIpAddressRandom in dIpAddresses:
+        if dIpAddressesRandom:
+            #print ("Wildcard: "+strInput + ":" +str(dIpAddressesRandom))
+            if not str(dIpAddressesRandom) in dRembemberdIpAddressesRandom:
+                sys.stdout.write(strInput + "\n")
+            dRembemberdIpAddressesRandom[str(dIpAddressesRandom)]=True
+            #print (dIpAddressesRandom)
+            #if sIpAddressRandom in dIpAddresses:
+            #    print ("Wildcard detected:" + sIpAddressRandom + " for " + strInput)
+        else:    
+            sys.stdout.write(strInput + "\n")
+            #print(str(dIpAddresses))
+        
+        if args.success:
+            for sIpAddress in dIpAddresses: 
+                fSuccess.write(strInput + ";" + sIpAddress + " \n")
+    except socket.gaierror:
+        if args.failed:
+            fFailed.write(strInput + "\n")
+        else:
+            pass
+    #except:
+    #    print ("Other error")
+    #    pass
+    
