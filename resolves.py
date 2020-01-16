@@ -26,7 +26,12 @@ def GetIpAddress(sHostName):
 parser = argparse.ArgumentParser()
 parser.add_argument("-oS", "--success", help="Define an output CSV file for succesfully resolved FQDNs. This file will contain the hostnames found with their corresponding IP addresses.")
 parser.add_argument("-oF", "--failed", help="Define an output file for FQDNs that failed to resolve.")
+parser.add_argument("-oP", "--plain", help="Define an output file for succesfully resolved FQDNs. This file will contain only hostnames found.")
+
 args = parser.parse_args()
+
+if args.plain:
+	fPlain = open(args.plain, 'w')
 
 if args.success:
 	fSuccess = open(args.success, 'w')
@@ -48,29 +53,37 @@ for strInput in sys.stdin:
         dIpAddressesRandom = False
     
     try:
-        dIpAddresses = GetIpAddress(strInput)
+        #print(strInput)
+        dIpAddresses = GetIpAddress(str(strInput))
         #for sIpAddressRandom in dIpAddresses:
         if dIpAddressesRandom:
             #print ("Wildcard: "+strInput + ":" +str(dIpAddressesRandom))
             if not str(dIpAddressesRandom) in dRembemberdIpAddressesRandom:
                 sys.stdout.write(strInput + "\n")
+                if args.plain:
+                    fPlain.write(strInput + " \n")
             dRembemberdIpAddressesRandom[str(dIpAddressesRandom)]=True
             #print (dIpAddressesRandom)
             #if sIpAddressRandom in dIpAddresses:
             #    print ("Wildcard detected:" + sIpAddressRandom + " for " + strInput)
         else:    
             sys.stdout.write(strInput + "\n")
+            if args.plain:
+                fPlain.write(strInput + " \n")
+
             #print(str(dIpAddresses))
         
         if args.success:
             for sIpAddress in dIpAddresses: 
-                fSuccess.write(strInput + ";" + sIpAddress + " \n")
+                if args.success:
+                    fSuccess.write(strInput + ";" + sIpAddress + " \n")
+                    
     except socket.gaierror:
         if args.failed:
             fFailed.write(strInput + "\n")
         else:
             pass
-    #except:
-    #    print ("Other error")
+    except:
+        sys.stderr.write("-- resolving " + strInput + " results in an error --\n")
     #    pass
     
