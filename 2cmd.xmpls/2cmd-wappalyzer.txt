@@ -1,0 +1,2 @@
+wappalyzer $2cmd$ |wappaligner 
+xsstrike -u https://www.job.net/ --crawl  --params  --log-file job-net.log --blind
