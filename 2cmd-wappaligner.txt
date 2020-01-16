@@ -1,1 +1,0 @@
-wappalyzer $2cmd$ |wappaligner 
