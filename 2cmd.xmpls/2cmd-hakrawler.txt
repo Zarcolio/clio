@@ -1,2 +1,1 @@
-mkdir 'hakrawler-$2cmdsan$'
-hakrawler -domain $2cmd$ -plain -scope fuzzy -all 
+hakrawler -domain $2cmd$ -plain -scope subs -all

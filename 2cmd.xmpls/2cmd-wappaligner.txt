@@ -1,1 +1,1 @@
-wappalyzer $2cmd$ |wappaligner >'wappaligner-$2cmd$.log'
+wappalyzer $2cmd$ |wappaligner >'wappaligner-$2cmdsan$.log'
