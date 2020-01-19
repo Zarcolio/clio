@@ -7,14 +7,19 @@ import argparse
 import re
 import requests
 
+requests.packages.urllib3.disable_warnings() 
+
 def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
     if (sProtocol == "http" and sPort == "80") or (sProtocol == "https" and sPort == "443"):
         sHttpUrl = sProtocol + "://" + sInFqdn
     else:
-        sHttpUrl = sProtocol + "://" + sInFqdn + ":" + sPort
+        if (sProtocol == "http" and sPort == "443"):
+            return False
+        else:
+            sHttpUrl = sProtocol + "://" + sInFqdn + ":" + sPort
         
     try:
-        rHttp = requests.get(sHttpUrl, timeout=int(sTimeout))
+        rHttp = requests.get(sHttpUrl, timeout=int(sTimeout), verify=False)
         if args.status is None:
             sys.stdout.write (sHttpUrl + "\n")
             return True
@@ -24,6 +29,7 @@ def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
                 if re.match(r"^[1-5][0-9][0-9]$", sStatus):
                     if str(rHttp.status_code) == sStatus:
                         sys.stdout.write (sHttpUrl + "\n")
+                        return True
                 elif sStatus == "info" or sStatus == "success" or sStatus == "redirect" or sStatus == "client-error" or sStatus == "server-error":
                     #print ("test")
                     iHttpStatus = int(rHttp.status_code)
@@ -84,11 +90,12 @@ for sInFqdn in sys.stdin:
     sInFqdn = sInFqdn.strip()
     for sPort in aPorts:
         if (sHttps == "https") or (sHttps is None): 
-        	fHttpTest("https", sInFqdn, sPort, aStatus, sTimeoutArg)
+            bHttpTestResult = fHttpTest("https", sInFqdn, sPort, aStatus, sTimeoutArg)
+            #print (bHttpTestResult)
         if (sHttps == "http") or (sHttps is None): 
-        	fHttpTest("http", sInFqdn, sPort, aStatus, sTimeoutArg)
+            fHttpTest("http", sInFqdn, sPort, aStatus, sTimeoutArg)
         if (sHttps != "http") and (sHttps != "https") and (sHttps is not None):
-        	print("Invalid protocol specification...")
-        	sys.exit(1) 
+            print("Invalid protocol specification...")
+            sys.exit(1) 
 
    
