@@ -7,6 +7,12 @@ import argparse
 import re
 import requests
 
+def signal_handler(sig, frame):
+    sys.stderr.write("\nCtrl-C detected, quitting...\n")
+    sys.exit(1)
+
+signal.signal(signal.SIGINT, signal_handler)
+
 requests.packages.urllib3.disable_warnings() 
 
 def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
@@ -21,17 +27,26 @@ def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
     try:
         rHttp = requests.get(sHttpUrl, timeout=int(sTimeout), verify=False)
         if args.status is None:
+            if args.slash:
+                sHttpUrl += "/"
             sys.stdout.write (sHttpUrl + "\n")
+            if args.csv:
+                fCsv.write(sHttpUrl + ";" + str(rHttp.status_code) +"\n")
             return True
         else:
             for sStatus in aStatus:
                 sStatus = sStatus.lower()
                 if re.match(r"^[1-5][0-9][0-9]$", sStatus):
                     if str(rHttp.status_code) == sStatus:
+                        if args.slash:
+                            sHttpUrl += "/"
                         sys.stdout.write (sHttpUrl + "\n")
+                        if args.csv:
+                            fCsv.write(sHttpUrl + ";" + str(rHttp.status_code) +"\n")
                         return True
                 elif sStatus == "info" or sStatus == "success" or sStatus == "redirect" or sStatus == "client-error" or sStatus == "server-error":
-                    #print ("test")
+                    if args.slash:
+                        sHttpUrl += "/"
                     iHttpStatus = int(rHttp.status_code)
                     if sStatus == "info" and iHttpStatus >= 100 and iHttpStatus <200:
                         sys.stdout.write (sHttpUrl + "\n")
@@ -43,26 +58,27 @@ def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
                         sys.stdout.write (sHttpUrl + "\n")
                     if sStatus == "server-error" and iHttpStatus >= 500 and iHttpStatus <600:
                         sys.stdout.write (sHttpUrl + "\n")
+                    if args.csv:
+                        fCsv.write(sHttpUrl + ";" + str(rHttp.status_code) +"\n")
+
                     return True
                 else:
-                    print ("Invalid HTTP status code(s)")
+                    sys.stderr.write ("Invalid HTTP status code(s)")
                     sys.exit()
     except requests.exceptions.RequestException:
         pass
  
-def signal_handler(sig, frame):
-	print("\nCtrl-C detected, quitting...\n")
-	sys.exit(1)
-
-signal.signal(signal.SIGINT, signal_handler)
-
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--ports", help="List of ports, separated by commas. Don't use spaces.")
 parser.add_argument("-s", "--status", help="List of HTTP status codes or classes: info, success, client-error or server-error, separated by commas. Status codes and classes may be combined. Don't use spaces.")
 parser.add_argument("-t", "--timeout", help="Time-out of the GET request in seconds.")
-parser.add_argument("-x", "--https", help="Use only HTTP or HTTP, not both.")
+parser.add_argument("-x", "--httpx", help="Use either HTTP or HTTP, not both.")
+parser.add_argument("-c", "--csv", help="Export to CSV file.")
+parser.add_argument("-l", "--slash", help="Add trailing slash.", action="store_true")
 args = parser.parse_args()
 
+if args.csv:
+	fCsv = open(args.csv, 'w')
 
 if args.ports:
     sPortArg = args.ports
@@ -81,8 +97,8 @@ if args.status:
 else:
     aStatus = []
 
-if args.https:
-	sHttps = args.https.lower()
+if args.httpx:
+	sHttps = args.httpx.lower()
 else:
 	sHttps = None
 
@@ -91,11 +107,10 @@ for sInFqdn in sys.stdin:
     for sPort in aPorts:
         if (sHttps == "https") or (sHttps is None): 
             bHttpTestResult = fHttpTest("https", sInFqdn, sPort, aStatus, sTimeoutArg)
-            #print (bHttpTestResult)
         if (sHttps == "http") or (sHttps is None): 
             fHttpTest("http", sInFqdn, sPort, aStatus, sTimeoutArg)
         if (sHttps != "http") and (sHttps != "https") and (sHttps is not None):
-            print("Invalid protocol specification...")
+            sys.stderr.write("Invalid protocol specification...")
             sys.exit(1) 
 
    
