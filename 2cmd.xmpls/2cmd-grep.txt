@@ -1,12 +1,2 @@
-echo $2cmd$ | grep seek.com.au/
-echo $2cmd$ | grep seek.com/
-echo $2cmd$ | grep skinfra.xyz/
-echo $2cmd$ | grep myseek.xyz/
-echo $2cmd$ | grep outfra.xyz/
-echo $2cmd$ | grep sol-data.com/
-echo $2cmd$ | grep jobapi.net/
-echo $2cmd$ | grep jobapi.io/
-echo $2cmd$ | grep certsy.com/
-echo $2cmd$ | grep certsynonprod.com/
-echo $2cmd$ | grep aips-internal.com/
-echo $2cmd$ | grep aips-services.com/
+echo $2cmd$| grep $2cmdfile$/
+

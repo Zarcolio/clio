@@ -1,0 +1,1 @@
+wgetdomainhosts $2cmd$ > 'wgetdomainhosts-$2cmdsan$.log' --s3 $2cmdsan$
