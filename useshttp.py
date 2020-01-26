@@ -17,12 +17,12 @@ requests.packages.urllib3.disable_warnings()
 
 def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
     if (sProtocol == "http" and sPort == "80") or (sProtocol == "https" and sPort == "443"):
-        sHttpUrl = sProtocol + "://" + sInFqdn
+        sHttpUrl = sProtocol + "://" + sInFqdn + args.request
     else:
         if (sProtocol == "http" and sPort == "443"):
             return False
         else:
-            sHttpUrl = sProtocol + "://" + sInFqdn + ":" + sPort
+            sHttpUrl = sProtocol + "://" + sInFqdn + ":" + sPort + args.request
         
     try:
         rHttp = requests.get(sHttpUrl, timeout=int(sTimeout), verify=False)
@@ -70,6 +70,7 @@ def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
  
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--ports", help="List of ports, separated by commas. Don't use spaces.")
+parser.add_argument("-r", "--request", help="Define the relative path of the GET request", default="")
 parser.add_argument("-s", "--status", help="List of HTTP status codes or classes: info, success, client-error or server-error, separated by commas. Status codes and classes may be combined. Don't use spaces.")
 parser.add_argument("-t", "--timeout", help="Time-out of the GET request in seconds.")
 parser.add_argument("-x", "--httpx", help="Use either HTTP or HTTP, not both.")
