@@ -1,1 +1,1 @@
-hakrawler -domain $2cmd$ -plain -scope subs -all -outdir hakrawler.req
+hakrawler -domain $2cmd$ -plain -scope strict
