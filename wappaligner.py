@@ -30,5 +30,5 @@ for app in json_data["applications"]:
         sVersion1 = ""
         sVersion2 = ""
 
-    sGoogleUrl = "https://www.google.com/search?q=" + urllib.parse.quote("\"" + app["name"] + "\"" + sVersion2 + " cve |exploit |vulnerability |updates |changelog")
+    sGoogleUrl = "https://www.google.com/search?q=" + urllib.parse.quote("\"" + app["name"] + "\"" + sVersion2 + " cve |exploit |vulnerability |updates |changelog |risk |advisory")
     print (app["name"] + sVersion1 + " (" + app["confidence"] + "%) - " + app["website"] + " - " + sGoogleUrl)
