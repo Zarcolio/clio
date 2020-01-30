@@ -76,12 +76,10 @@ for strInput in sys.stdin:
         
         strInputSan = FileNameSan(strInput)
         sCmd = sCmd.replace("$2cmdsan$", strInputSan, len(sCmd))
-        #sCmd = sCmd.strip()
 
         sCmd = sCmd.replace("$2cmd$", strInput, len(sCmd))
         if args.second:
             sCmd = sCmd.replace("$2nd$", args.second, len(sCmd))
-        #sCmd = sCmd.strip()
 
         sCmd = sCmd.replace("\n", "", len(sCmd))
         sCmd = escapeString(sCmd)
