@@ -7,6 +7,7 @@ import signal
 import os
 from termcolor import colored
 import time
+import multiprocessing 
 
 def signal_handler(sig, frame):
         print("\nCtrl-C detected, exiting...\n")
@@ -29,6 +30,12 @@ def escapeString(sString):
     #sString = sString.replace("","", len(sString))
     return sString
 
+def execCmd(sCmd):
+    if args.verbose:
+        sys.stderr.write((colored(sCmd,"green"))+"\n")
+
+    os.system(sCmd)
+    
 signal.signal(signal.SIGINT, signal_handler)
 
 # Get some commandline arguments:
@@ -37,6 +44,7 @@ parser.add_argument("cmd", help="File containing one or more commands that shoul
 parser.add_argument("-2", "--second", help="Pass a second variable to the script to run.")
 parser.add_argument("-t", "--timeout", help="Wait x milliseconds between commands.")
 parser.add_argument("-v", "--verbose", help="In green, show the commands that are created from stdin and the provide config file.", action="store_true")
+parser.add_argument("-w", "--workers", help="Defines how many worker threads execute the commands parallelly.", default=1)
 args = parser.parse_args()
 
 if args.cmd:
@@ -54,7 +62,9 @@ except FileNotFoundError:
     sys.exit(1)
 
 iFirst = 0
-    
+   
+pool = multiprocessing.Pool(int(args.workers))
+ 
 for strInput in sys.stdin:
     if args.timeout:
         if iFirst == 1:
@@ -76,8 +86,9 @@ for strInput in sys.stdin:
         #sCmd = sCmd.strip()
 
         sCmd = sCmd.replace("\n", "", len(sCmd))
-        if args.verbose:
-            sys.stderr.write((colored(sCmd,"green"))+"\n")
-
         sCmd = escapeString(sCmd)
-        os.system(sCmd)
+        
+        pool.apply_async(execCmd, args = (sCmd, ))
+
+pool.close()
+pool.join()
