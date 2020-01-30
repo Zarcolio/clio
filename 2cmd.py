@@ -10,7 +10,8 @@ import time
 import multiprocessing 
 
 def signal_handler(sig, frame):
-        print("\nCtrl-C detected, exiting...\n")
+        print("\nCtrl-C detected, terminating all workers...\n")
+        pool.terminate()
         sys.exit(0)
 
 def FileNameSan(sFileName):
@@ -47,14 +48,12 @@ parser.add_argument("-v", "--verbose", help="In green, show the commands that ar
 parser.add_argument("-w", "--workers", help="Defines how many worker threads execute the commands parallelly.", default=1)
 args = parser.parse_args()
 
-if args.cmd:
-    sCmdFile = args.cmd
-else:
+if not args.cmd:
     parser.print_help(sys.stderr)
     sys.exit(1)
     
 try:
-    f = open(os.path.abspath(sCmdFile), 'r')
+    f = open(os.path.abspath(args.cmd), 'r')
     aCmds = f.readlines()
     f.close()
 except FileNotFoundError:
@@ -62,7 +61,6 @@ except FileNotFoundError:
     sys.exit(1)
 
 iFirst = 0
-   
 pool = multiprocessing.Pool(int(args.workers))
  
 for strInput in sys.stdin:
