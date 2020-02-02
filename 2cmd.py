@@ -10,7 +10,7 @@ import time
 import multiprocessing 
 
 def signal_handler(sig, frame):
-        print("\nCtrl-C detected, terminating all workers...\n")
+        sys.stderr.write("\nCtrl-C detected, terminating all workers...\n")
         pool.terminate()
         sys.exit(0)
 

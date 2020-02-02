@@ -30,5 +30,10 @@ for app in json_data["applications"]:
         sVersion1 = ""
         sVersion2 = ""
 
+    sExploitdbUrl = "https://www.exploit-db.com/search?q=" + urllib.parse.quote(app["name"])
     sGoogleUrl = "https://www.google.com/search?q=" + urllib.parse.quote("\"" + app["name"] + "\"" + sVersion2 + " cve |exploit |vulnerability |updates |changelog |risk |advisory")
-    print (app["name"] + sVersion1 + " (" + app["confidence"] + "%) - " + app["website"] + " - " + sGoogleUrl)
+    print (app["name"] + sVersion1 + " (" + app["confidence"] + "%)")
+    print (" - " + app["website"])
+    print (" - " + sExploitdbUrl)
+    print (" - " + sGoogleUrl)
+    
