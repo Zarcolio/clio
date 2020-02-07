@@ -42,7 +42,7 @@ def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
                             sHttpUrl += "/"
                         sys.stdout.write (sHttpUrl + "\n")
                         if args.csv:
-                            fCsv.write(sHttpUrl + ";" + str(rHttp.status_code) +"\n")
+                            fCsv.write(sHttpUrl + " ;" + str(rHttp.status_code) +"\n")
                         return True
                 elif sStatus == "info" or sStatus == "success" or sStatus == "redirect" or sStatus == "client-error" or sStatus == "server-error":
                     if args.slash:
