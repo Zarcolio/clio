@@ -17,15 +17,15 @@ requests.packages.urllib3.disable_warnings()
 
 def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
     if (sProtocol == "http" and sPort == "80") or (sProtocol == "https" and sPort == "443"):
-        sHttpUrl = sProtocol + "://" + sInFqdn + args.request
+        sHttpUrl = sProtocol + "://" + sInFqdn
     else:
         if (sProtocol == "http" and sPort == "443"):
             return False
         else:
-            sHttpUrl = sProtocol + "://" + sInFqdn + ":" + sPort + args.request
+            sHttpUrl = sProtocol + "://" + sInFqdn + ":" + sPort
         
     try:
-        rHttp = requests.get(sHttpUrl, timeout=int(sTimeout), verify=False, allow_redirects=args.redirect)
+        rHttp = requests.get(sHttpUrl, timeout=int(sTimeout), verify=False)
         if args.status is None:
             if args.slash:
                 sHttpUrl += "/"
@@ -70,11 +70,10 @@ def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
  
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--ports", help="List of ports, separated by commas. Don't use spaces.")
-parser.add_argument("-q", "--request", help="Define the relative path of the GET request", default="")
-parser.add_argument("-r", "--redirect", help="Follow redirect", default=False, action="store_true")
 parser.add_argument("-s", "--status", help="List of HTTP status codes or classes: info, success, client-error or server-error, separated by commas. Status codes and classes may be combined. Don't use spaces.")
 parser.add_argument("-t", "--timeout", help="Time-out of the GET request in seconds.")
 parser.add_argument("-x", "--httpx", help="Use either HTTP or HTTP, not both.")
+parser.add_argument("-1", "--one", help="If HTTPS found, don't try HTTP for the same port.", action="store_true", default=False)
 parser.add_argument("-c", "--csv", help="Export to CSV file.")
 parser.add_argument("-l", "--slash", help="Add trailing slash.", action="store_true")
 args = parser.parse_args()
@@ -100,18 +99,19 @@ else:
     aStatus = []
 
 if args.httpx:
-	sHttps = args.httpx.lower()
+	sHttpx = args.httpx.lower()
 else:
-	sHttps = None
+	sHttpx = None
 
 for sInFqdn in sys.stdin:
     sInFqdn = sInFqdn.strip()
     for sPort in aPorts:
-        if (sHttps == "https") or (sHttps is None): 
+        if (sHttpx == "https" and sPort != "80") or (sHttpx is None and sPort != "80"): 
             bHttpTestResult = fHttpTest("https", sInFqdn, sPort, aStatus, sTimeoutArg)
-        if (sHttps == "http") or (sHttps is None): 
-            fHttpTest("http", sInFqdn, sPort, aStatus, sTimeoutArg)
-        if (sHttps != "http") and (sHttps != "https") and (sHttps is not None):
+        if not bHttpTestResult or not args.onlyone:
+            if (sHttpx == "http" and sPort != "443") or (sHttpx is None and sPort != "443"): 
+                fHttpTest("http", sInFqdn, sPort, aStatus, sTimeoutArg)
+        if (sHttpx != "http") and (sHttpx != "https") and (sHttpx is not None):
             sys.stderr.write("Invalid protocol specification...")
             sys.exit(1) 
 
