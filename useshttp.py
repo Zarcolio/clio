@@ -108,7 +108,7 @@ for sInFqdn in sys.stdin:
     for sPort in aPorts:
         if (sHttpx == "https" and sPort != "80") or (sHttpx is None and sPort != "80"): 
             bHttpTestResult = fHttpTest("https", sInFqdn, sPort, aStatus, sTimeoutArg)
-        if not bHttpTestResult or not args.onlyone:
+        if not bHttpTestResult or not args.one:
             if (sHttpx == "http" and sPort != "443") or (sHttpx is None and sPort != "443"): 
                 fHttpTest("http", sInFqdn, sPort, aStatus, sTimeoutArg)
         if (sHttpx != "http") and (sHttpx != "https") and (sHttpx is not None):
