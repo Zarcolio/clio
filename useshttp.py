@@ -31,7 +31,7 @@ def fHttpTest(sProtocol, sInFqdn, sPort, aStatus, sTimeout):
                 sHttpUrl += "/"
             sys.stdout.write (sHttpUrl + "\n")
             if args.csv:
-                fCsv.write(sHttpUrl + ";" + str(rHttp.status_code) +"\n")
+                fCsv.write(sHttpUrl + " ;" + str(rHttp.status_code) +"\n")
             return True
         else:
             for sStatus in aStatus:
@@ -79,7 +79,7 @@ parser.add_argument("-l", "--slash", help="Add trailing slash.", action="store_t
 args = parser.parse_args()
 
 if args.csv:
-	fCsv = open(args.csv, 'w')
+	fCsv = open(args.csv, 'w', buffering=1)
 
 if args.ports:
     sPortArg = args.ports
