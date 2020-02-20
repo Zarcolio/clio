@@ -96,7 +96,8 @@ for strInput in sys.stdin:
                 #fSuccess.write(strInput + ";" + sIpAddress + " \n")
                 fSuccess.write(strInput + ";" + sCname[:-1] + " \n")
         else:
-            for sIpAddress in dIpAddresses: 
-                fSuccess.write(strInput + ";" + sIpAddress + " \n")
+            if dIpAddresses:
+                for sIpAddress in dIpAddresses: 
+                    fSuccess.write(strInput + ";" + sIpAddress + " \n")
                 
     
