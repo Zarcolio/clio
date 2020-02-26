@@ -38,7 +38,7 @@ def execCmd(sCmd):
 
 
 def getFullDir(sFile):
-    # if no path is provide, assume scriptdir/2cmd.xmpls:
+    # if no path is provided, assume scriptdir/2cmd.xmpls:
     if "/" in sFile:
         sPathToFile = os.path.abspath(sFile)
     else:
