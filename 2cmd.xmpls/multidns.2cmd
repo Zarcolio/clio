@@ -1,0 +1,3 @@
+subfinder -d $2cmd$ -o $2cmdsan$-subfinder.log  -silent
+amass enum -d $2cmd$ -o $2cmdsan$-amass.log
+sublist3r -d $2cmd$ -o $2cmdsan$-amass.log
