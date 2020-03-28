@@ -272,7 +272,7 @@ requests-file==1.4.3
 requests-ntlm==1.1.0
 retrying==1.3.3
 roman==2.0.0
-rope==0.10.5
+rope==0.11.0
 Routes==2.4.1
 rq==1.2.2
 ruamel.yaml==0.15.89
@@ -318,7 +318,7 @@ tornado==5.1.1
 tqdm==4.43.0
 traitlets==4.3.3
 translationstring==1.3
-Twisted==18.9.0
+Twisted==19.7.0
 txaio==2.10.0
 tzlocal==2.1b1
 u-msgpack-python==2.1
@@ -328,10 +328,10 @@ urllib3==1.25.8
 urwid==2.0.1
 venusian==1.2.0
 wafw00f==2.1.0
-waitress==1.4.1
+waitress==1.4.3
 wapiti3==3.0.3
 wcwidth==0.1.8
-webargs==5.1.2
+webargs==5.1.3
 webencodings==0.5.1
 WebOb==1.8.5
 websocket-client==0.53.0
