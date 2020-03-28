@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get install -y nodejs npm
+sudo apt install -y nodejs npm
 
 
 npm i -g commander
