@@ -3,10 +3,10 @@
 sudo apt install -y nodejs npm
 
 
-npm i -g commander
-npm i -g normalize-url
-npm i -g url
-npm i -g wappalyzer
-npm i -g puppeteer
-npm i -g wappalyzer-cli
+sudo npm i -g commander
+sudo npm i -g normalize-url
+sudo npm i -g url
+sudo npm i -g wappalyzer
+sudo npm i -g puppeteer
+sudo npm i -g wappalyzer-cli
 
