@@ -2,7 +2,7 @@
 
 For installing the Python requirements:
 
-sudo pip install -r requirements.txt
+sudo pip3 install -r requirements.txt
 
 
 # Command Line Input Output
